@@ -65,14 +65,15 @@ main { max-width: 1000px; margin: 0 auto; padding: 18px 16px 110px; }
 
 @media (max-width: 720px) {
   .topbar { gap: 10px; }
-  .icon-btn { margin-left: auto; }
+  .top-actions { margin-left: auto; }
+  .nav a { padding: 5px 4px; }
   .nav {
     position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; margin: 0;
     justify-content: space-around;
     background: #131317; border-top: 1px solid var(--line);
     padding: 6px 4px calc(6px + env(safe-area-inset-bottom));
   }
-  .nav a { flex-direction: column; gap: 3px; padding: 5px 8px; font-size: 11px; }
+  .nav a { flex-direction: column; gap: 3px; font-size: 11px; flex: 1; min-width: 0; }
   .nav a.active { background: none; color: var(--accent); }
   .nav svg { width: 22px; height: 22px; }
 }
@@ -263,3 +264,58 @@ select {
 .toast.show { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
 .toast button { border: 0; background: none; color: #8a6d00; font-weight: 800; padding: 0; }
 @media (min-width: 721px) { .toast { bottom: 28px; } }
+
+/* ---------- Header actions & sync status ---------- */
+.top-actions { display: flex; gap: 8px; flex: none; }
+#settings-btn { position: relative; }
+.sync-dot {
+  position: absolute; top: 6px; right: 6px; width: 8px; height: 8px; border-radius: 50%;
+  border: 2px solid var(--surface-2); display: none;
+}
+#settings-btn.ok .sync-dot { display: block; background: var(--ok); }
+#settings-btn.busy .sync-dot { display: block; background: var(--accent); animation: pulse 1s ease-in-out infinite; }
+#settings-btn.err .sync-dot { display: block; background: var(--danger); }
+#settings-btn.active { background: var(--text); color: var(--bg); }
+@keyframes pulse { 50% { opacity: 0.3; } }
+
+/* ---------- Segmented control ---------- */
+.seg { display: inline-flex; padding: 4px; gap: 4px; border-radius: 12px; background: var(--surface); margin-bottom: 14px; }
+.seg button { border: 0; background: transparent; color: var(--muted); font-weight: 700; padding: 8px 18px; border-radius: 9px; }
+.seg button.on { background: var(--surface-2); color: var(--text); }
+
+/* ---------- Movies ---------- */
+.page-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+.page-head h1 { font-size: 24px; letter-spacing: -0.02em; }
+.tile .badge { position: relative; }
+.tile .poster-wrap { position: relative; }
+.tile .corner {
+  position: absolute; top: 7px; right: 7px; display: grid; place-items: center;
+  width: 26px; height: 26px; border-radius: 50%; background: var(--accent); color: var(--accent-ink);
+  font-weight: 900; font-size: 13px; box-shadow: 0 2px 8px rgba(0,0,0,.4);
+}
+.tile .when { position: absolute; left: 7px; bottom: 7px; padding: 3px 8px; border-radius: 999px; background: rgba(0,0,0,.75); font-size: 11px; font-weight: 700; }
+.stars { display: flex; gap: 2px; }
+.stars button { border: 0; background: none; padding: 2px; font-size: 26px; line-height: 1; color: #4a4a56; }
+.stars button.on { color: var(--accent); }
+.watched-line { display: flex; align-items: center; gap: 10px; color: var(--ok); font-weight: 700; }
+
+/* ---------- Settings ---------- */
+.settings { display: grid; gap: 14px; max-width: 680px; }
+.settings h1 { font-size: 24px; letter-spacing: -0.02em; margin-bottom: 4px; }
+.settings .panel { margin: 0; padding: 18px; }
+.settings h2 { font-size: 17px; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+.settings p { margin: 0 0 12px; color: #cfcfd7; }
+.steps { margin: 0 0 14px; padding-left: 20px; color: #cfcfd7; }
+.steps li { margin-bottom: 6px; }
+.steps a, .settings p a, .note a { color: var(--accent); text-decoration: underline; }
+.field { display: flex; gap: 8px; flex-wrap: wrap; }
+.field input {
+  flex: 1; min-width: 200px; padding: 10px 12px; border-radius: 10px;
+  border: 1px solid var(--line); background: var(--bg); outline: none; font-family: ui-monospace, monospace; font-size: 14px;
+}
+.field input:focus { border-color: var(--accent); }
+.status-pill { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; background: rgba(52,209,122,.15); color: var(--ok); }
+.status-pill.off { background: rgba(255,255,255,.08); color: var(--muted); }
+.status-pill.err { background: rgba(255,92,92,.15); color: var(--danger); }
+.btn-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.fine { font-size: 13px; color: var(--muted); margin-top: 10px !important; }

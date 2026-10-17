@@ -1,8 +1,8 @@
-# ShowTrack 📺
+# ShowTrack 📺🎬
 
-A personal TV show tracker in the spirit of TV Time. You can search any show, add it to your library and check off episodes as you watch them. It also shows when new episodes are coming out.
+A personal TV show and movie tracker in the spirit of TV Time. Search any show or movie, check off episodes, keep a list of movies to watch, see when new episodes and movies come out, and sync it all across your devices.
 
-It is plain HTML, CSS and JavaScript with no build step, server or API key, so it runs for free on **GitHub Pages**.
+It is plain HTML, CSS and JavaScript with no build step or server, so it runs for free on **GitHub Pages**. Shows need no key; movies need a free TMDB key.
 
 ## Features
 
@@ -15,6 +15,8 @@ It is plain HTML, CSS and JavaScript with no build step, server or API key, so i
 - **Stats**: shows, episodes watched, total time watched and episodes this week
 - Checks your shows for new episodes automatically every 12 hours (or tap ⟳)
 - **Installable** on your phone's home screen, and opens offline
+- **Movies**: a *Want to watch* list and a *Watched* list, with your own 1–5 star rating; upcoming releases show in the Upcoming tab (powered by [TMDB](https://www.themoviedb.org), free key)
+- **Auto sync** between your phone, laptop and other devices, using a secret gist in your GitHub account
 - **Backup / restore** your library as a JSON file
 
 ## Put it on GitHub Pages
@@ -26,12 +28,25 @@ It is plain HTML, CSS and JavaScript with no build step, server or API key, so i
 
 To get it on your phone, open that link and use **Add to Home Screen** (Safari share menu, or Chrome's ⋮ menu).
 
+## Turn on movies (one time)
+
+1. Create a free account at [themoviedb.org](https://www.themoviedb.org/signup).
+2. Open [Settings → API](https://www.themoviedb.org/settings/api) and request a key (Developer, personal use).
+3. Copy the **API Key** and paste it in the app under **Movies** or **Settings**. With sync on, the key reaches your other devices automatically.
+
+## Turn on sync (one time per device)
+
+1. In the app, open **Settings** (gear icon) and follow the link to create a GitHub token. It is pre-filled with only the **gist** permission.
+2. Choose an expiration (for example *No expiration*), generate it, copy it and paste it into the app.
+3. On each other device, paste the same token. The app finds your existing data automatically.
+
+**How it works:** your shows, movies and watch history are saved in one secret gist called `showtrack-data.json` in your GitHub account. Each change uploads a few seconds after you make it. Every device checks for changes when you open the app and every 2 minutes while it is open. Each item remembers when it was last changed, and the newest change wins, so edits made on two devices are combined instead of overwritten.
+
+**Privacy:** the token stays on the device where you paste it and is never uploaded. A secret gist isn't listed anywhere, but anyone who has its exact link can open it. It only contains your watch list.
+
 ## Where your data lives
 
-Your library and watch history are saved in **your browser** (localStorage). They are not stored on GitHub, and no account is needed. This means:
-
-- Each browser or device has its own library. To move it, use **My Shows → Download backup**, then **Restore backup** on the other device.
-- Clearing your browser's site data erases the library, so download a backup now and then.
+Everything is also saved in **your browser** (localStorage), so the app works offline and opens instantly. Without sync, each device has its own library; use **Settings → Download backup / Restore backup** to move it.
 
 ## Run it locally
 
@@ -46,10 +61,10 @@ python3 -m http.server 8000
 |---|---|
 | `index.html` | Page shell and navigation |
 | `styles.css` | All styling (dark theme, mobile-first) |
-| `app.js` | The whole app: TVmaze API, storage, views |
+| `app.js` | The whole app: TVmaze and TMDB APIs, storage, sync, views |
 | `sw.js` | Service worker that caches the app for offline use |
 | `manifest.json`, `icon*` | Home-screen app icon and settings |
 
 ## Credits
 
-Show and episode data comes from the [TVmaze API](https://www.tvmaze.com/api), licensed CC BY-SA.
+Show and episode data comes from the [TVmaze API](https://www.tvmaze.com/api), licensed CC BY-SA. Movie data comes from [TMDB](https://www.themoviedb.org). This product uses the TMDB API but is not endorsed or certified by TMDB.

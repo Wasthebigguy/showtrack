@@ -1,5 +1,5 @@
 // Caches the app itself so it opens instantly (and offline). Show data always comes fresh from TVmaze.
-const CACHE = 'showtrack-v1';
+const CACHE = 'showtrack-v2';
 const ASSETS = ['./', './index.html', './styles.css', './app.js', './manifest.json', './icon.svg', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', (e) => {
